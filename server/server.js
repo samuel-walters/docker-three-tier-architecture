@@ -1,11 +1,11 @@
-const http = require('http');
+var express = require('express');
+var mongo = require('mongodb');
+var server = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
+var url = 'mongodb://localhost:27017/db-name'
 
-server.listen(3000, function() {
-  console.log('The server is ready and listening on port 3000');
+server.use(express.static(__dirname + '/public'));
+
+server.listen(3000, () => {
+  console.log(`Server listening on port 3000`)
 });
