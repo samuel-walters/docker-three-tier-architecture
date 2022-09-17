@@ -13,7 +13,12 @@ form {
   text-align: center;
   color: white;
   padding: 8px;
+}
 
+ul {
+  list-style: inside;
+  text-align: center;
+  color: white;
 }
 
 a {
