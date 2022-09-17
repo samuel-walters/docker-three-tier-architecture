@@ -48,7 +48,9 @@ Vagrant.configure("2") do |config|
     config.vm.provision :docker
     config.vm.provision :docker_compose
 
-    # Allows folders on the host machine to be synced to and from the guest machine.
+    # Allows folders on the host machine to be synced to the guest machine.
+    # (Type "rsync" does a one-time one-way sync from the host to the VM.)
+    # (node_modules gets excluded because otherwise "npm install" causes installation errors.)
     # (First parameter is host path, second is VM path.)
-    config.vm.synced_folder ".", "/vagrant"
+    config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", ".gitignore", "/server/node_modules/", "Blockers.md", "Vagrantfile"]
 end
