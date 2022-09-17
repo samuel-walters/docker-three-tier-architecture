@@ -1,8 +1,8 @@
 const express = require('express');
-const mongo = require('mongodb');
-const server = express();
+const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 
-const url = 'mongodb://localhost:27017/db-name'
+var server = express();
 
 server.use(express.static(__dirname + '/public'));
 
