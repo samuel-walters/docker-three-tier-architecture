@@ -13,6 +13,10 @@ const nameSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  age: {
+    type: Number,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
@@ -25,30 +29,35 @@ const server = express();
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(express.static(__dirname + '/public'));
 server.set("view engine", "ejs");
-// post
 
+// post
 server.post("/addname", (req, res) => {
   const insertedData = new User(req.body);
-  insertedData.save(function (err) {
-    if (err) return console.error(err);
-    res.send("User successfully added to DB!");
-    console.log(req.body + "Saved to database.");
-  });
+  const re = /^[A-Za-z]+$/;
+  const firstInput = insertedData.firstName;
+  const secondInput = insertedData.secondName;
+  const age = insertedData.age;
+  const isnum = /^\d+$/.test(age);
+  if (re.test(firstInput) && re.test(secondInput) && isnum) {
+    if (age != null && age >= 18 && age <= 100) {
+      insertedData.save(function (err) {
+        if (err) return console.error(err);
+          res.render("successful.ejs");
+          console.log(insertedData.firstName + "Saved to database.");
+      });
+     } else {
+       res.render("invalid_age.ejs");
+     }
+  } else {
+    res.render("invalid_name.ejs");
+  }
 });
 
 // get
 
 server.get("/hi", async (req, res) => {
-
   const readData = await User.find({});
-  /*
-  try {
-    res.send(readData);
-  } catch (err) {
-    return console.error(err);
-  }
-  */
-  res.render("index.ejs", {userList: readData})
+  res.render("list.ejs", {userList: readData})
 });
 
 server.listen(3000, () => {
