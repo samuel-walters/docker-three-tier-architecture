@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.2.22
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  server:
+    container_name: server
+    build: ./server
+    restart: always
+    links:
+      - mongo
+    ports:
+      - "3000:3000"
