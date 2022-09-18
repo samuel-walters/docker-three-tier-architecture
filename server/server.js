@@ -55,7 +55,7 @@ server.post("/addname", (req, res) => {
 
 // get
 
-server.get("/hi", async (req, res) => {
+server.get("/users", async (req, res) => {
   const readData = await User.find({});
   res.render("list.ejs", {userList: readData})
 });
