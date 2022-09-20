@@ -57,7 +57,7 @@ server.post("/addname", (req, res) => {
           res.render("successful.ejs");
       });
       } else {
-        res.redner("invalid_id.ejs");
+        res.render("invalid_id.ejs");
       }
     } else {
       res.render("invalid_age.ejs");
