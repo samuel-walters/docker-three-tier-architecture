@@ -25,12 +25,13 @@ const nameSchema = new mongoose.Schema({
 const User = mongoose.model("User", nameSchema);
 
 const server = express();
-// tidies up the request object.
+
+// Tidies up the request object.
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(express.static(__dirname + '/public'));
 server.set("view engine", "ejs");
 
-// post
+// Post
 server.post("/addname", (req, res) => {
   const insertedData = new User(req.body);
   const re = /^[A-Za-z]+$/;
@@ -42,8 +43,7 @@ server.post("/addname", (req, res) => {
     if (age != null && age >= 18 && age <= 100) {
       insertedData.save(function (err) {
         if (err) return console.error(err);
-          res.render("successful.ejs");
-          console.log(insertedData.firstName + "Saved to database.");
+        res.render("successful.ejs");
       });
      } else {
        res.render("invalid_age.ejs");
@@ -53,8 +53,7 @@ server.post("/addname", (req, res) => {
   }
 });
 
-// get
-
+// Get
 server.get("/users", async (req, res) => {
   const readData = await User.find({});
   res.render("list.ejs", {userList: readData})
