@@ -6,16 +6,14 @@ services:
     restart: always
     volumes:
       - ./data:/data/db
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
   server:
     container_name: server
     build: ./server
     restart: always
     depends_on:
       - mongo
-    ports:
-      - "3000:3000"
   reverse-proxy:
     container_name: nginx
     build: ./nginx
