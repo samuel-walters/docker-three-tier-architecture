@@ -43,13 +43,10 @@ server.post("/addname", (req, res) => {
   const insertedData = new User(req.body);
   const checkNumber = /^\d+$/;
   const checkString = /^[A-Za-z]+$/;
-  const firstInput = insertedData.firstName;
-  const secondInput = insertedData.secondName;
   const age = insertedData.age;
-  const userID = insertedData.userID;
-  if (checkString.test(firstInput) && checkString.test(secondInput)) {
+  if (checkString.test(insertedData.firstName) && checkString.test(insertedData.secondName)) {
     if (age != null && age >= 18 && age <= 100 && checkNumber.test(age)) {
-      if (checkNumber.test(userID)) {
+      if (checkNumber.test(insertedData.userID)) {
         insertedData.save(function (err) {
           if (err) {
             res.render("error.ejs");
@@ -80,14 +77,14 @@ server.get("/delete", (req, res) => {
   var objectValue = JSON.parse(stringed);
   var passedID = objectValue['id'];
   if (passedID === undefined) {
-    console.log("It's undefined");
+    console.log("passedID is undefined.");
   } else {
     console.log(passedID);
     User.remove({"userID":passedID}, function(err,result) {
       if (err) {
         console.log(err);
       } else {
-        console.log("Result: ", result);
+        console.log(result);
       }
     });
 }});

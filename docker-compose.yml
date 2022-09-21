@@ -1,12 +1,5 @@
 version: '3.3'
 services:
-  reverse-proxy:
-    container_name: nginx
-    build: ./nginx
-    depends_on:
-      - server
-    ports:
-      - "80:80"
   mongo:
     container_name: mongo
     image: mongo:4.2.22
@@ -19,7 +12,14 @@ services:
     container_name: server
     build: ./server
     restart: always
-    links:
+    depends_on:
       - mongo
     ports:
       - "3000:3000"
+  reverse-proxy:
+    container_name: nginx
+    build: ./nginx
+    depends_on:
+      - server
+    ports:
+      - "80:80"
