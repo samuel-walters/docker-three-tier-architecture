@@ -17,6 +17,7 @@ services:
   reverse-proxy:
     container_name: nginx
     build: ./nginx
+    restart: always
     depends_on:
       - server
     ports:
