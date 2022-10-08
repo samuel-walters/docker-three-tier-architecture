@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
     config.vm.network "private_network", ip: "192.168.50.4"
 
     # This message shows after "vagrant up".
-    config.vm.post_up_message = "Useful instructions here."
+    config.vm.post_up_message = "Docker-compose is located in /vagrant."
 
     # Configures settings specific to virtualbox
     config.vm.provider "virtualbox" do |v|
