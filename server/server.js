@@ -41,23 +41,23 @@ app.post("/addname", async (req, res) => {
   if (checkString.test(firstName) && checkString.test(lastName)) {
     if (checkNumber.test(age) && age != null) {
       if (age >= 18 && age <= 100) {
-          if (checkNumber.test(userID)) {
-            const doc = {
-              UserID: userID,
-              firstName: firstName,
-              lastName: lastName,
-              age: age
-            }
-            let errorOccurred = 0;
-            await main(doc, "post").then(console.log).catch(error => errorOccurred = 1).finally(() => client.close());
-            if (errorOccurred == 0) {
-              res.send("Success!");
-            } else {
-              res.send("Failed to add user to the database. Perhaps check if the User ID is unique.");
-            }
-          } else {
-            res.send("UserIDs must only contain digits.");
+        if (checkNumber.test(userID)) {
+          const doc = {
+            UserID: userID,
+            firstName: firstName,
+            lastName: lastName,
+            age: age
           }
+          let errorOccurred = 0;
+          await main(doc, "post").then(console.log).catch(error => errorOccurred = 1).finally(() => client.close());
+          if (errorOccurred == 0) {
+            res.send("Success!");
+          } else {
+            res.send("Failed to add user to the database. Perhaps check if the User ID is unique.");
+          }
+        } else {
+          res.send("UserIDs must only contain digits.");
+        }
       } else {
           res.send("The user must be older than 17 and younger than 101.");
       } 
@@ -79,7 +79,6 @@ app.get("/users", async (req, res) => {
   res.render("list.ejs", {userList: readData})
 });
 
-// Delete
 app.get("/delete", async (req, res) => {
   res.render("delete.ejs");
   var stringed = JSON.stringify(req.query, null, 2);
